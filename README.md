@@ -118,8 +118,8 @@ sudo apt-get install git build-essential redis-server libboost1.55-all-dev nodej
 Clone the repository and run `npm update` for all the dependencies to be installed:
 
 ```bash
-git clone https://github.com/forknote/cryptonote-universal-pool.git pool
-cd pool
+git clone https://github.com/niobio-cash/forknote-pool.git niobiopool
+cd niobiopool
 npm update
 ```
 
@@ -129,13 +129,13 @@ npm update
 Explanation for each field:
 ```javascript
 /* Used for storage in redis so multiple coins can share the same redis instance. */
-"coin": "dashcoin",
+"coin": "niobiocash",
 
 /* Used for front-end display */
-"symbol": "DSH",
+"symbol": "NBR",
 
 /* Minimum units in a single coin, see COIN constant in DAEMON_CODE/src/cryptonote_config.h */
-"coinUnits": 1000000000000,
+"coinUnits": 100000000,
 
 /* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
 "coinDifficultyTarget": 120,
@@ -174,7 +174,7 @@ Explanation for each field:
     "clusterForks": "auto",
 
     /* Address where block rewards go, and miner payments come from. */
-    "poolAddress": "D6WLtrV1SBWV8HWQzQv8uuYuGy3uwZ8ah5iT5HovSqhTKMauquoTsKP8RBJzVqVesX87poYWQgkGWB4NWHJ6Ravv93v4BaE"
+    "poolAddress": "WALLET_POOL_SERVER"
 
     /* Poll RPC daemons for new blocks every this many milliseconds. */
     "blockRefreshInterval": 1000,
@@ -184,19 +184,19 @@ Explanation for each field:
 
     "ports": [
         {
-            "port": 3333, //Port for mining apps to connect to
+            "port": 3334, //Port for mining apps to connect to
             "difficulty": 100, //Initial difficulty miners are set to
             "desc": "Low end hardware" //Description of port
         },
         {
-            "port": 5555,
+            "port": 5556,
             "difficulty": 2000,
             "desc": "Mid range hardware"
         },
         {
-            "port": 7777,
-            "difficulty": 10000,
-            "desc": "High end hardware"
+            "port": 7778,
+            "difficulty": 400000,
+            "desc": "Nicehash or farms"
         }
     ],
 
@@ -204,8 +204,8 @@ Explanation for each field:
        individual miners based on their hashrate in order to lower networking and CPU
        overhead. */
     "varDiff": {
-        "minDiff": 2, //Minimum difficulty
-        "maxDiff": 100000,
+        "minDiff": 100, //Minimum difficulty
+        "maxDiff": 400000,
         "targetTime": 100, //Try to get 1 share per this many seconds
         "retargetTime": 30, //Check to see if we should retarget every this many seconds
         "variancePercent": 30, //Allow time to very this % from target without retargeting
@@ -252,11 +252,11 @@ Explanation for each field:
     "enabled": true,
     "interval": 600, //how often to run in seconds
     "maxAddresses": 50, //split up payments if sending to more than this many addresses
-    "mixin": 3, //number of transactions yours is indistinguishable from
-    "transferFee": 5000000000, //fee to pay for each transaction
-    "minPayment": 100000000000, //miner balance required before sending payment
+    "mixin": 2, //number of transactions yours is indistinguishable from
+    "transferFee": 50000, //fee to pay for each transaction
+    "minPayment": 1000000, //miner balance required before sending payment
     "maxTransactionAmount": 0, //split transactions by this amount(to prevent "too big transaction" error)
-    "denomination": 100000000000 //truncate to this precision and store remainder
+    "denomination": 1000000 //truncate to this precision and store remainder
 },
 
 /* Module that monitors the submitted block maturities and manages rounds. Confirmed
@@ -268,10 +268,10 @@ Explanation for each field:
 
     /* Block depth required for a block to unlocked/mature. Found in daemon source as
        the variable CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW */
-    "depth": 60,
-    "poolFee": 1.8, //1.8% pool fee (2% total fee total including donations)
-    "devDonation": 0.1, //0.1% donation to send to pool dev - only works with Monero
-    "coreDevDonation": 0.1 //0.1% donation to send to core devs - works with Bytecoin, Monero, Dashcoin, QuarazCoin, Fantoncoin, AEON and OneEvilCoin
+    "depth": 10,
+    "poolFee": 1.8, //1.8% pool fee (1.8% total fee total including donations)
+    "devDonation": 0, //0% donation to send to pool dev - only works with Monero
+    "coreDevDonation": 0 //0% donation to send to core devs - works with Bytecoin, Monero, Dashcoin, QuarazCoin, Fantoncoin, AEON and OneEvilCoin
 },
 
 /* AJAX API used for front-end website. */
@@ -282,19 +282,19 @@ Explanation for each field:
     "port": 8117,
     "blocks": 30, //amount of blocks to send at a time
     "payments": 30, //amount of payments to send at a time
-    "password": "test" //password required for admin stats
+    "password": "YOUR_PASSWORD" //password required for admin stats
 },
 
 /* Coin daemon connection details. */
 "daemon": {
     "host": "127.0.0.1",
-    "port": 29081
+    "port": 8315
 },
 
 /* Wallet daemon connection details. */
 "wallet": {
     "host": "127.0.0.1",
-    "port": 29082
+    "port": 8314
 },
 
 /* Redis connection into. */
@@ -426,7 +426,7 @@ var irc = "irc.freenode.net/#forknote";
 var email = "support@poolhost.com";
 
 /* Market stat display params from https://www.cryptonator.com/widget */
-var cryptonatorWidget = ["DSH-BTC", "DSH-USD", "DSH-EUR"];
+var cryptonatorWidget = ["{symbol}-BTC", "{symbol}-USD", "{symbol}-EUR"];
 
 /* Download link to cryptonote-easy-miner for Windows users. */
 var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
