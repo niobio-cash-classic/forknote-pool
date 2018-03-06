@@ -2,7 +2,7 @@
     "coin": "niobiocash",
     "symbol": "NBR",
     "coinUnits": 100000000,
-    "coinDifficultyTarget": 120,
+    "coinDifficultyTarget": 240,
 
     "logging": {
         "files": {
