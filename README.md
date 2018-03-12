@@ -138,7 +138,7 @@ Explanation for each field:
 "coinUnits": 100000000,
 
 /* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
-"coinDifficultyTarget": 120,
+"coinDifficultyTarget": 240,
 
 "logging": {
 
